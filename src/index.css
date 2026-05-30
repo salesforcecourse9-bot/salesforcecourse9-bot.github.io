@@ -14,8 +14,8 @@ body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, sans-serif;
-  background: #f7f5f1;
-  color: #1f2933;
+  background: #F5EFE3;
+  color: #1A130C;
   letter-spacing: -0.006em;
 }
 
@@ -28,6 +28,25 @@ html {
 }
 
 ::selection {
-  background: #3e6b8b;
+  background: #2D7264;
   color: #ffffff;
 }
+
+/* ── Hero entrance animations ─────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97) translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.anim-hero { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-d1   { animation-delay: 0.05s; }
+.anim-d2   { animation-delay: 0.18s; }
+.anim-d3   { animation-delay: 0.30s; }
+.anim-d4   { animation-delay: 0.42s; }
+.anim-d5   { animation-delay: 0.53s; }
+.anim-img  { animation: fadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
