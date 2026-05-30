@@ -338,12 +338,22 @@ function Navigation() {
           ))}
         </nav>
 
-        <a
-          href={`tel:${PHONE_PRIMARY}`}
-          className="hidden md:inline-flex items-center gap-2 bg-ocean-500 hover:bg-ocean-600 text-white transition px-5 py-2.5 rounded-lg font-semibold text-sm shadow-sm"
-        >
-          <FiPhone size={15} /> Call us
-        </a>
+        <div className="hidden md:flex items-center gap-2">
+          <a
+            href={`tel:${PHONE_PRIMARY}`}
+            className="inline-flex items-center gap-2 bg-ocean-500 hover:bg-ocean-600 text-white transition px-5 py-2.5 rounded-lg font-semibold text-sm shadow-sm"
+          >
+            <FiPhone size={15} /> Call us
+          </a>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 bg-white border border-sand-300 hover:border-ocean-500 text-ink-900 transition px-5 py-2.5 rounded-lg font-semibold text-sm shadow-sm"
+          >
+            <FiMessageCircle size={15} /> WhatsApp
+          </a>
+        </div>
 
         <button
           type="button"
