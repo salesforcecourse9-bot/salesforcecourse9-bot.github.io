@@ -13,8 +13,6 @@ import {
   FiMessageCircle,
   FiMenu,
   FiX,
-  FiArrowUpRight,
-  FiArrowRight,
 } from "react-icons/fi";
 import { LuUtensils } from "react-icons/lu";
 import { FaStar } from "react-icons/fa";
@@ -34,63 +32,55 @@ const PHONE_PRIMARY = "7799619090";
 const PHONE_SECONDARY = "7799629090";
 const PHONE_PRIMARY_DISPLAY = "+91 77996 19090";
 const PHONE_SECONDARY_DISPLAY = "+91 77996 29090";
+const WHATSAPP_URL = `https://wa.me/91${PHONE_PRIMARY}`;
 
 const NAV_LINKS = [
-  { label: "Stay", href: "#stay" },
+  { label: "About", href: "#about" },
   { label: "Rooms", href: "#rooms" },
   { label: "Amenities", href: "#amenities" },
   { label: "Gallery", href: "#gallery" },
   { label: "Contact", href: "#contact" },
 ];
 
-function Wordmark({ tone = "dark" }) {
-  const main = tone === "light" ? "text-ivory-50" : "text-espresso-900";
+function Logo() {
   return (
-    <a href="#top" className="flex flex-col leading-none">
-      <span className={`font-display text-2xl font-semibold tracking-wide ${main}`}>
-        SS<span className="text-gold-500">.</span>INN
+    <a href="#top" className="flex items-center gap-3">
+      <span className="grid place-items-center w-10 h-10 rounded-lg bg-ocean-500 text-white font-display text-lg font-bold">
+        S
       </span>
-      <span className="text-[9px] uppercase tracking-[0.42em] text-gold-500 mt-1 pl-0.5">
-        OYO &amp; Hotels
+      <span className="leading-none">
+        <span className="block font-display text-xl font-bold text-ink-900">
+          SS.INN
+        </span>
+        <span className="block text-[10px] uppercase tracking-[0.22em] text-ocean-600 font-semibold mt-1">
+          OYO &amp; Hotels
+        </span>
       </span>
     </a>
   );
 }
 
 function Navigation() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const dark = scrolled;
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        dark
-          ? "bg-ivory-100/92 backdrop-blur-md border-b border-espresso-900/10 py-0"
-          : "bg-transparent py-2"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Wordmark tone={dark ? "dark" : "light"} />
+    <header className="fixed top-0 inset-x-0 z-50 bg-sand-50/95 backdrop-blur-md border-b border-sand-300">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 h-16 md:h-20 flex items-center justify-between">
+        <Logo />
 
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className={`text-[13px] uppercase tracking-[0.18em] font-medium transition ${
-                dark
-                  ? "text-espresso-700 hover:text-gold-600"
-                  : "text-ivory-50/85 hover:text-gold-400"
-              }`}
+              className="text-sm font-medium text-ink-600 hover:text-ocean-600 transition"
             >
               {link.label}
             </a>
@@ -99,20 +89,15 @@ function Navigation() {
 
         <a
           href={`tel:${PHONE_PRIMARY}`}
-          className={`hidden md:inline-flex items-center gap-2 px-5 py-2.5 text-[13px] uppercase tracking-[0.16em] font-medium transition border ${
-            dark
-              ? "border-espresso-900/20 text-espresso-900 hover:bg-espresso-900 hover:text-ivory-50 hover:border-espresso-900"
-              : "border-ivory-50/40 text-ivory-50 hover:bg-ivory-50 hover:text-espresso-900"
-          }`}
+          className="hidden md:inline-flex items-center gap-2 bg-ocean-500 hover:bg-ocean-600 text-white transition px-5 py-2.5 rounded-lg font-semibold text-sm"
         >
-          <FiPhone size={14} />
-          Reserve
+          <FiPhone size={15} /> Call us
         </a>
 
         <button
           type="button"
           onClick={() => setOpen((s) => !s)}
-          className={`md:hidden p-2 -mr-2 ${dark ? "text-espresso-900" : "text-ivory-50"}`}
+          className="md:hidden p-2 -mr-2 text-ink-900"
           aria-label="Toggle menu"
         >
           {open ? <FiX size={26} /> : <FiMenu size={26} />}
@@ -120,24 +105,18 @@ function Navigation() {
       </div>
 
       {open && (
-        <div className="md:hidden bg-ivory-100/97 backdrop-blur-md border-t border-espresso-900/10">
-          <nav className="px-6 py-5 flex flex-col">
+        <div className="md:hidden bg-sand-50 border-t border-sand-300">
+          <nav className="px-5 py-4 flex flex-col">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="py-3.5 text-sm uppercase tracking-[0.18em] font-medium text-espresso-800 border-b border-espresso-900/10 last:border-0"
+                className="py-3.5 text-base font-medium text-ink-800 border-b border-sand-200 last:border-0"
               >
                 {link.label}
               </a>
             ))}
-            <a
-              href={`tel:${PHONE_PRIMARY}`}
-              className="mt-5 inline-flex items-center justify-center gap-2 bg-espresso-900 text-ivory-50 px-5 py-3.5 text-sm uppercase tracking-[0.16em] font-medium"
-            >
-              <FiPhone size={14} /> Call {PHONE_PRIMARY_DISPLAY}
-            </a>
           </nav>
         </div>
       )}
@@ -145,39 +124,62 @@ function Navigation() {
   );
 }
 
-function Eyebrow({ index, children, light = false }) {
+function SectionHead({ eyebrow, title, intro, center = false, light = false }) {
   return (
-    <div
-      className={`flex items-center gap-4 mb-6 text-[12px] uppercase tracking-[0.32em] font-medium ${
-        light ? "text-gold-400" : "text-gold-600"
-      }`}
-    >
-      {index && <span className="font-display text-base tracking-normal">{index}</span>}
-      <span className={`h-px w-10 ${light ? "bg-gold-400/50" : "bg-gold-500/50"}`} />
-      <span>{children}</span>
+    <div className={`${center ? "mx-auto text-center" : ""} max-w-2xl mb-12`}>
+      <p
+        className={`text-xs uppercase tracking-[0.2em] font-semibold mb-3 ${
+          light ? "text-ocean-100" : "text-ocean-600"
+        }`}
+      >
+        {eyebrow}
+      </p>
+      <h2
+        className={`font-display text-3xl md:text-4xl font-semibold leading-tight ${
+          light ? "text-white" : "text-ink-900"
+        }`}
+      >
+        {title}
+      </h2>
+      {intro && (
+        <p
+          className={`mt-4 text-lg leading-8 font-light ${
+            light ? "text-sand-200" : "text-ink-600"
+          }`}
+        >
+          {intro}
+        </p>
+      )}
     </div>
   );
 }
 
 export default function SSInnHotels() {
+  const quickFacts = [
+    { Icon: FiThermometer, label: "A/C & Non-A/C rooms" },
+    { Icon: FiCalendar, label: "Daily · Weekly · Monthly" },
+    { Icon: FiTruck, label: "Bike & car parking" },
+    { Icon: LuUtensils, label: "Home-style meals" },
+  ];
+
   const rooms = [
     {
-      name: "The Deluxe Room",
+      name: "Deluxe A/C Room",
       image: room1,
-      desc: "Air-conditioned and softly lit, with a plush bed, writing desk and a spotless en-suite bath — our most comfortable room for an unhurried stay.",
-      facts: ["Air-conditioned", "Queen bed", "En-suite bath", "Free WiFi"],
+      desc: "Air-conditioned comfort with a plush bed and clean en-suite bath — ideal for a restful stay.",
+      tags: ["A/C", "Attached bath", "Free WiFi"],
     },
     {
-      name: "The Standard Room",
+      name: "Standard Room",
       image: room3,
-      desc: "Bright, airy and immaculately kept, with everything a single or twin traveller needs — calm, clean and quietly comfortable.",
-      facts: ["Non-A/C", "Twin / single", "Hot water", "Free WiFi"],
+      desc: "Bright, spotless and well-ventilated — everything you need for a comfortable single or twin stay.",
+      tags: ["Non-A/C", "Hot water", "Free WiFi"],
     },
     {
-      name: "The Family Suite",
+      name: "Family Room",
       image: room4,
-      desc: "A roomier layout for families and small groups, with flexible bedding for up to four guests and generous storage throughout.",
-      facts: ["2–4 guests", "Spacious", "Daily housekeeping", "Free WiFi"],
+      desc: "Roomy layout for families and groups, with flexible bedding for 2 to 4 guests.",
+      tags: ["2–4 guests", "Spacious", "Housekeeping"],
     },
   ];
 
@@ -186,7 +188,7 @@ export default function SSInnHotels() {
     { label: "24/7 CCTV security", Icon: FiVideo },
     { label: "A/C & Non-A/C rooms", Icon: FiThermometer },
     { label: "Bike & car parking", Icon: FiTruck },
-    { label: "Day, week & month stays", Icon: FiCalendar },
+    { label: "Daily, weekly & monthly", Icon: FiCalendar },
     { label: "South & North Indian food", Icon: LuUtensils },
     { label: "Hot & cold water", Icon: FiCoffee },
     { label: "Laundry service", Icon: FiDroplet },
@@ -194,387 +196,421 @@ export default function SSInnHotels() {
   ];
 
   const gallery = [
-    { title: "The Deluxe Room", image: room1 },
+    { title: "Deluxe Room", image: room1 },
     { title: "Bedroom", image: room2 },
     { title: "Standard Room", image: room3 },
-    { title: "Family Suite", image: room4 },
+    { title: "Family Room", image: room4 },
     { title: "Twin Room", image: room5 },
     { title: "Guest Lounge", image: lounge },
-    { title: "The Bath", image: bathroom },
+    { title: "Bathroom", image: bathroom },
     { title: "The Property", image: building },
   ];
 
   return (
-    <div id="top" className="min-h-screen bg-ivory-100 text-espresso-900 font-sans antialiased">
+    <div
+      id="top"
+      className="min-h-screen bg-sand-100 text-ink-900 font-sans antialiased pb-[68px] md:pb-0"
+    >
       <Navigation />
 
-      {/* Hero — cinematic full screen */}
-      <section className="relative h-[100svh] min-h-[600px] w-full overflow-hidden">
-        <img
-          src={heroRoom}
-          alt="A guest room at SS.INN OYO & Hotels"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-espresso-900/55 via-espresso-900/30 to-espresso-900/80" />
-
-        <div className="relative h-full max-w-7xl mx-auto px-6 flex flex-col justify-end pb-16 md:pb-20">
-          <div className="max-w-3xl">
-            <p className="flex items-center gap-3 text-ivory-50/80 text-xs uppercase tracking-[0.32em] mb-7">
-              <FiMapPin size={14} className="text-gold-400" />
-              Gopanpally · Hyderabad
+      {/* Hero */}
+      <section className="pt-24 md:pt-32 pb-14 md:pb-20 px-5 sm:px-6">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          <div>
+            <p className="inline-flex items-center gap-2 bg-ocean-50 text-ocean-700 px-3 py-1.5 rounded-full text-xs font-semibold mb-6">
+              <FiMapPin size={13} /> Gopanpally, Hyderabad
             </p>
-            <h1 className="font-display text-ivory-50 text-5xl sm:text-6xl lg:text-[5.5rem] font-light leading-[1.02] mb-7">
-              A quiet, elegant stay —
-              <span className="block italic text-gold-400 font-normal">
-                made simple.
-              </span>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.08] text-ink-900 mb-5">
+              A clean, comfortable stay — for a night or a season.
             </h1>
-            <p className="text-ivory-100/80 text-lg leading-8 max-w-xl font-light mb-9">
-              Clean, well-kept A/C &amp; Non-A/C rooms with free WiFi, home-style
-              meals and round-the-clock care — for a night, a week or a season.
+            <p className="text-lg text-ink-600 leading-8 font-light mb-7 max-w-xl">
+              SS.INN OYO &amp; Hotels offers tidy A/C &amp; Non-A/C rooms with
+              free WiFi, home-style meals and 24/7 security in Gopanpally.
             </p>
-            <div className="flex flex-wrap gap-4">
+
+            {/* Primary actions — details up front */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={`tel:${PHONE_PRIMARY}`}
-                className="inline-flex items-center gap-2 bg-gold-400 hover:bg-gold-500 text-espresso-900 transition px-7 py-4 text-[13px] uppercase tracking-[0.16em] font-semibold"
+                className="inline-flex items-center justify-center gap-2 bg-ocean-500 hover:bg-ocean-600 text-white transition px-6 py-4 rounded-xl font-semibold"
               >
-                <FiPhone size={15} /> Book your stay
+                <FiPhone size={18} /> Call {PHONE_PRIMARY_DISPLAY}
               </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-white border border-sand-300 hover:border-ocean-500 text-ink-900 transition px-6 py-4 rounded-xl font-semibold"
+              >
+                <FiMessageCircle size={18} /> WhatsApp
+              </a>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-500">
+              <span className="flex items-center gap-1.5">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <FaStar key={i} className="text-amber-500" size={13} />
+                ))}
+                <span className="ml-1 text-ink-700 font-medium">
+                  4.5 on Google
+                </span>
+              </span>
               <a
                 href={MAPS_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 border border-ivory-50/40 text-ivory-50 hover:bg-ivory-50/10 transition px-7 py-4 text-[13px] uppercase tracking-[0.16em] font-medium"
+                className="inline-flex items-center gap-1.5 hover:text-ocean-600 transition"
               >
-                <FiMapPin size={15} /> Directions
+                <FiMapPin size={14} /> Get directions
+              </a>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden shadow-xl shadow-ink-900/10">
+              <img
+                src={heroRoom}
+                alt="A guest room at SS.INN OYO & Hotels"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Quick facts strip */}
+        <div className="max-w-6xl mx-auto mt-10 md:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {quickFacts.map(({ Icon, label }) => (
+            <div
+              key={label}
+              className="flex items-center gap-3 bg-white border border-sand-200 rounded-xl px-4 py-3.5"
+            >
+              <Icon size={20} className="text-ocean-500 shrink-0" />
+              <span className="text-sm font-medium text-ink-800 leading-tight">
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="bg-white border-y border-sand-200 px-5 sm:px-6">
+        <div className="max-w-6xl mx-auto py-16 md:py-24 grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+          <div className="order-2 md:order-1">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-lg shadow-ink-900/10">
+              <img
+                src={building}
+                alt="SS.INN OYO & Hotels in Gopanpally"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+          <div className="order-1 md:order-2">
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold text-ocean-600 mb-3">
+              About the hotel
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl font-semibold leading-tight text-ink-900 mb-5">
+              A warm, well-kept place to stay.
+            </h2>
+            <p className="text-ink-600 text-lg leading-8 font-light mb-4">
+              Located near Eedhamma Temple beside the Gopanpally flyover, SS.INN
+              OYO &amp; Hotels welcomes travellers, families and working
+              professionals with clean, modern rooms and friendly service.
+            </p>
+            <p className="text-ink-500 leading-8 font-light mb-7">
+              From high-speed WiFi and CCTV security to home-style meals and
+              24/7 drinking water, every detail is built around a comfortable,
+              hassle-free stay.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-3">
+              <a
+                href={`tel:${PHONE_PRIMARY}`}
+                className="flex items-center gap-3 border border-sand-300 hover:border-ocean-500 rounded-xl px-4 py-3 transition"
+              >
+                <FiPhone className="text-ocean-500 shrink-0" size={18} />
+                <span>
+                  <span className="block text-[10px] uppercase tracking-wider text-ink-500 font-semibold">
+                    Reservations
+                  </span>
+                  <span className="block text-sm font-semibold text-ink-900">
+                    {PHONE_PRIMARY_DISPLAY}
+                  </span>
+                </span>
+              </a>
+              <a
+                href={`tel:${PHONE_SECONDARY}`}
+                className="flex items-center gap-3 border border-sand-300 hover:border-ocean-500 rounded-xl px-4 py-3 transition"
+              >
+                <FiPhone className="text-ocean-500 shrink-0" size={18} />
+                <span>
+                  <span className="block text-[10px] uppercase tracking-wider text-ink-500 font-semibold">
+                    Front desk
+                  </span>
+                  <span className="block text-sm font-semibold text-ink-900">
+                    {PHONE_SECONDARY_DISPLAY}
+                  </span>
+                </span>
               </a>
             </div>
           </div>
         </div>
-
-        {/* bottom hairline bar */}
-        <div className="absolute bottom-0 inset-x-0 border-t border-ivory-50/15">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between text-ivory-50/70 text-xs uppercase tracking-[0.22em]">
-            <span className="flex items-center gap-2">
-              <FaStar className="text-gold-400" size={12} /> Loved on Google
-            </span>
-            <a href={`tel:${PHONE_PRIMARY}`} className="hover:text-gold-400 transition">
-              {PHONE_PRIMARY_DISPLAY}
-            </a>
-          </div>
-        </div>
       </section>
 
-      {/* Stay — editorial intro */}
-      <section id="stay" className="py-24 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <Eyebrow index="01">Welcome</Eyebrow>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.08] text-espresso-900 mb-8">
-              A calm retreat beside the
-              <span className="italic text-gold-600"> Gopanpally flyover.</span>
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-8 max-w-2xl">
-              <p className="text-taupe-600 text-[17px] leading-8 font-light">
-                Set near Eedhamma Temple, SS.INN OYO &amp; Hotels welcomes
-                travellers, families and working professionals with bright,
-                modern rooms and warm, attentive service.
-              </p>
-              <p className="text-taupe-600 text-[17px] leading-8 font-light">
-                From high-speed WiFi and CCTV-secured corridors to home-style
-                meals and 24/7 drinking water, every detail is arranged around a
-                restful, hassle-free stay.
-              </p>
-            </div>
-          </div>
+      {/* Rooms */}
+      <section id="rooms" className="px-5 sm:px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto">
+          <SectionHead
+            eyebrow="Our rooms"
+            title="Pick the room that fits your stay."
+            intro="Every room is cleaned daily and kept simple, bright and comfortable."
+          />
 
-          <div className="lg:col-span-5 flex flex-col justify-end">
-            <div className="border-t border-espresso-900/15 divide-y divide-espresso-900/10">
-              {[
-                { v: "4.5", s: "★", l: "Guest rating on Google" },
-                { v: "24/7", s: "", l: "Reception & security" },
-                { v: "1–4", s: "", l: "Guests per room" },
-              ].map((stat) => (
-                <div key={stat.l} className="flex items-baseline justify-between py-5">
-                  <span className="font-display text-4xl md:text-5xl font-light text-espresso-900">
-                    {stat.v}
-                    <span className="text-gold-500 text-3xl">{stat.s}</span>
-                  </span>
-                  <span className="text-taupe-500 text-sm uppercase tracking-[0.14em] text-right max-w-[55%]">
-                    {stat.l}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Rooms — alternating editorial showcase */}
-      <section id="rooms" className="bg-ivory-200/50 border-y border-espresso-900/10 py-24 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-2xl mb-16 md:mb-20">
-            <Eyebrow index="02">Accommodations</Eyebrow>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.08]">
-              Rooms kept simple,
-              <span className="italic text-gold-600"> bright and clean.</span>
-            </h2>
-          </div>
-
-          <div className="space-y-20 md:space-y-28">
-            {rooms.map((room, i) => {
-              const flip = i % 2 === 1;
-              return (
-                <article
-                  key={room.name}
-                  className="grid md:grid-cols-12 gap-8 lg:gap-14 items-center"
-                >
-                  <div
-                    className={`md:col-span-7 ${flip ? "md:order-2" : "md:order-1"}`}
-                  >
-                    <div className="aspect-[16/11] overflow-hidden">
-                      <img
-                        src={room.image}
-                        alt={room.name}
-                        loading="lazy"
-                        className="h-full w-full object-cover hover:scale-105 transition duration-[1200ms]"
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    className={`md:col-span-5 ${flip ? "md:order-1" : "md:order-2"}`}
-                  >
-                    <span className="font-display text-gold-500 text-2xl">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="font-display text-3xl md:text-4xl font-light text-espresso-900 mt-2 mb-4">
-                      {room.name}
-                    </h3>
-                    <p className="text-taupe-600 leading-8 font-light mb-7">
-                      {room.desc}
-                    </p>
-                    <ul className="grid grid-cols-2 gap-y-3 gap-x-6 mb-8">
-                      {room.facts.map((f) => (
-                        <li
-                          key={f}
-                          className="flex items-center gap-2.5 text-sm text-espresso-800"
-                        >
-                          <span className="h-1 w-1 rounded-full bg-gold-500" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                    <a
-                      href={`tel:${PHONE_PRIMARY}`}
-                      className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.16em] font-medium text-espresso-900 border-b border-gold-500/60 pb-1 hover:text-gold-600 transition"
-                    >
-                      Enquire about this room <FiArrowRight size={14} />
-                    </a>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Amenities — minimal hairline list on dark band */}
-      <section id="amenities" className="bg-espresso-900 text-ivory-50 py-24 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-2xl mb-16">
-            <Eyebrow index="03" light>
-              The Essentials
-            </Eyebrow>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.08]">
-              Everything quietly
-              <span className="italic text-gold-400"> taken care of.</span>
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-12 border-t border-ivory-50/15">
-            {amenities.map(({ label, Icon }, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-5 py-7 border-b border-ivory-50/15"
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {rooms.map((room) => (
+              <article
+                key={room.name}
+                className="bg-white border border-sand-200 rounded-2xl overflow-hidden hover:shadow-lg transition"
               >
-                <Icon size={22} className="text-gold-400 shrink-0" strokeWidth={1.5} />
-                <span className="text-lg font-light tracking-wide">{label}</span>
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={room.image}
+                    alt={room.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display text-xl font-semibold text-ink-900 mb-2">
+                    {room.name}
+                  </h3>
+                  <p className="text-sm text-ink-600 leading-6 font-light mb-4">
+                    {room.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {room.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="text-[11px] font-medium text-ocean-700 bg-ocean-50 rounded-full px-2.5 py-1"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
+            <a
+              href={`tel:${PHONE_PRIMARY}`}
+              className="inline-flex items-center justify-center gap-2 bg-ocean-500 hover:bg-ocean-600 text-white transition px-6 py-3.5 rounded-xl font-semibold"
+            >
+              <FiPhone size={16} /> Check availability
+            </a>
+            <span className="text-sm text-ink-500">
+              Best rates when you book direct.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Amenities */}
+      <section id="amenities" className="bg-ocean-700 text-white px-5 sm:px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto">
+          <SectionHead
+            light
+            eyebrow="Amenities"
+            title="Everything taken care of."
+            intro="The little things that make a stay easy — quietly handled."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {amenities.map(({ label, Icon }) => (
+              <div
+                key={label}
+                className="flex items-center gap-4 bg-white/10 rounded-xl px-5 py-4"
+              >
+                <Icon size={20} className="text-ocean-100 shrink-0" />
+                <span className="font-medium">{label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Gallery — horizontal scroll */}
-      <section id="gallery" className="py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <div className="max-w-xl">
-            <Eyebrow index="04">Gallery</Eyebrow>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.08]">
-              A look <span className="italic text-gold-600">around.</span>
-            </h2>
-          </div>
-          <p className="text-taupe-500 text-sm uppercase tracking-[0.2em] flex items-center gap-2">
-            Scroll to explore <FiArrowRight size={15} />
-          </p>
-        </div>
-
-        <div className="no-scrollbar flex gap-5 overflow-x-auto snap-x snap-mandatory px-6 pb-2">
-          {gallery.map((item, index) => (
-            <figure
-              key={index}
-              className="snap-start shrink-0 w-[82%] sm:w-[46%] lg:w-[30%] group relative overflow-hidden"
-            >
-              <div className="aspect-[3/4] overflow-hidden">
+      {/* Gallery */}
+      <section id="gallery" className="px-5 sm:px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto">
+          <SectionHead
+            eyebrow="Gallery"
+            title="A look around."
+            intro="Bright, well-kept rooms and shared spaces designed to feel calm and clean."
+          />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            {gallery.map((item, index) => (
+              <figure
+                key={index}
+                className="group relative overflow-hidden rounded-xl bg-white border border-sand-200 aspect-square"
+              >
                 <img
                   src={item.image}
                   alt={item.title}
                   loading="lazy"
-                  className="h-full w-full object-cover group-hover:scale-105 transition duration-[1200ms]"
+                  className="h-full w-full object-cover group-hover:scale-105 transition duration-700"
                 />
-              </div>
-              <figcaption className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-espresso-900/85 via-espresso-900/20 to-transparent">
-                <h3 className="text-ivory-50 font-display text-xl font-light">
+                <figcaption className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-ink-900/80 to-transparent text-white text-xs font-medium">
                   {item.title}
-                </h3>
-              </figcaption>
-            </figure>
-          ))}
-          <div className="shrink-0 w-2" aria-hidden />
-        </div>
-      </section>
-
-      {/* Reviews — quiet testimonial band */}
-      <section className="px-6 pb-24 md:pb-32">
-        <div className="max-w-4xl mx-auto text-center border-y border-espresso-900/15 py-16 md:py-20">
-          <div className="flex justify-center gap-1.5 mb-7">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <FaStar key={i} className="text-gold-500" size={18} />
+                </figcaption>
+              </figure>
             ))}
           </div>
-          <p className="font-display text-2xl md:text-4xl font-light italic leading-snug text-espresso-900 mb-8">
-            “Clean rooms, warm hosts and a genuinely comfortable stay.”
-          </p>
-          <a
-            href={MAPS_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.18em] font-medium text-espresso-900 hover:text-gold-600 transition"
-          >
-            Read our Google reviews <FiArrowUpRight size={15} />
-          </a>
         </div>
       </section>
 
-      {/* Contact — closing dark section */}
-      <section
-        id="contact"
-        className="relative bg-espresso-900 text-ivory-50 py-24 md:py-32 px-6 overflow-hidden"
-      >
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.08] bg-[radial-gradient(circle_at_50%_0%,#C6A565,transparent_55%)]"
-        />
-        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+      {/* Contact */}
+      <section id="contact" className="bg-white border-t border-sand-200 px-5 sm:px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14">
           <div>
-            <Eyebrow index="05" light>
-              Reservations
-            </Eyebrow>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.05] mb-8">
-              Come stay with
-              <span className="italic text-gold-400"> us.</span>
-            </h2>
-            <p className="text-ivory-100/75 text-lg font-light leading-8 mb-10 max-w-md">
-              Call us or message on WhatsApp and we&rsquo;ll arrange everything —
-              we&rsquo;d love to host you.
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold text-ocean-600 mb-3">
+              Contact &amp; location
             </p>
-            <div className="flex flex-wrap gap-4">
+            <h2 className="font-display text-3xl md:text-4xl font-semibold leading-tight text-ink-900 mb-6">
+              Ready to book your stay?
+            </h2>
+
+            <div className="space-y-3 mb-8">
               <a
                 href={`tel:${PHONE_PRIMARY}`}
-                className="inline-flex items-center gap-2 bg-gold-400 hover:bg-gold-500 text-espresso-900 transition px-7 py-4 text-[13px] uppercase tracking-[0.16em] font-semibold"
+                className="flex items-center gap-4 bg-sand-100 hover:bg-ocean-50 rounded-xl px-5 py-4 transition"
               >
-                <FiPhone size={15} /> Call {PHONE_PRIMARY_DISPLAY}
+                <span className="grid place-items-center w-11 h-11 rounded-lg bg-ocean-500 text-white shrink-0">
+                  <FiPhone size={18} />
+                </span>
+                <span>
+                  <span className="block text-xs text-ink-500 font-medium">
+                    Call us
+                  </span>
+                  <span className="block text-base font-semibold text-ink-900">
+                    {PHONE_PRIMARY_DISPLAY}
+                  </span>
+                  <span className="block text-sm text-ink-600">
+                    {PHONE_SECONDARY_DISPLAY}
+                  </span>
+                </span>
               </a>
+
               <a
-                href={`https://wa.me/91${PHONE_PRIMARY}`}
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 border border-ivory-50/35 hover:bg-ivory-50/10 transition px-7 py-4 text-[13px] uppercase tracking-[0.16em] font-medium"
+                className="flex items-center gap-4 bg-sand-100 hover:bg-ocean-50 rounded-xl px-5 py-4 transition"
               >
-                <FiMessageCircle size={15} /> WhatsApp
+                <span className="grid place-items-center w-11 h-11 rounded-lg bg-ocean-500 text-white shrink-0">
+                  <FiMessageCircle size={18} />
+                </span>
+                <span>
+                  <span className="block text-xs text-ink-500 font-medium">
+                    Message us
+                  </span>
+                  <span className="block text-base font-semibold text-ink-900">
+                    Chat on WhatsApp
+                  </span>
+                </span>
+              </a>
+
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-4 bg-sand-100 hover:bg-ocean-50 rounded-xl px-5 py-4 transition"
+              >
+                <span className="grid place-items-center w-11 h-11 rounded-lg bg-ocean-500 text-white shrink-0">
+                  <FiMapPin size={18} />
+                </span>
+                <span>
+                  <span className="block text-xs text-ink-500 font-medium">
+                    Address
+                  </span>
+                  <span className="block text-sm font-medium text-ink-900 leading-5">
+                    H.No. 2-89/1/7/5, Near Eedhamma Temple, Beside Flyover,
+                    Gopanpally — 500019
+                  </span>
+                </span>
               </a>
             </div>
           </div>
 
-          <div className="lg:pt-4">
-            <div className="divide-y divide-ivory-50/15 border-y border-ivory-50/15">
-              <div className="py-6 flex items-start gap-4">
-                <FiMapPin className="text-gold-400 mt-1 shrink-0" size={18} />
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-ivory-100/50 mb-1.5">
-                    Address
-                  </p>
-                  <p className="text-ivory-50 font-light leading-7">
-                    H.No. 2-89/1/7/5, Near Eedhamma Temple,
-                    <br />
-                    Beside Flyover, Gopanpally — 500019, Hyderabad
-                  </p>
-                </div>
-              </div>
-              <div className="py-6 flex items-start gap-4">
-                <FiPhone className="text-gold-400 mt-1 shrink-0" size={18} />
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-ivory-100/50 mb-1.5">
-                    Telephone
-                  </p>
-                  <p className="text-ivory-50 font-light leading-7">
-                    <a href={`tel:${PHONE_PRIMARY}`} className="hover:text-gold-400 transition">
-                      {PHONE_PRIMARY_DISPLAY}
-                    </a>
-                    <br />
-                    <a href={`tel:${PHONE_SECONDARY}`} className="hover:text-gold-400 transition">
-                      {PHONE_SECONDARY_DISPLAY}
-                    </a>
-                  </p>
-                </div>
-              </div>
-              <div className="py-6 flex items-start gap-4">
-                <FiMapPin className="text-gold-400 mt-1 shrink-0" size={18} />
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-ivory-100/50 mb-1.5">
-                    Location
-                  </p>
-                  <a
-                    href={MAPS_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-ivory-50 font-light hover:text-gold-400 transition"
-                  >
-                    View on Google Maps <FiArrowUpRight size={15} />
-                  </a>
-                </div>
-              </div>
-            </div>
+          <div className="rounded-2xl overflow-hidden border border-sand-200 min-h-[300px] bg-sand-100">
+            <iframe
+              title="SS.INN OYO & Hotels location map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2512203535807!2d78.3063459!3d17.447686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9300391285a1%3A0x58a82e939d81c247!2sSS%20INN%20PG%26%20CO-LIVE%20HOSTEL%20%26%20OYO!5e0!3m2!1sen!2sin!4v1780148257394!5m2!1sen!2sin"
+              className="w-full h-full min-h-[300px]"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-espresso-800 text-ivory-50 px-6">
-        <div className="max-w-7xl mx-auto py-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <Wordmark tone="light" />
-          <p className="text-ivory-100/55 text-sm font-light max-w-xs md:text-right leading-6">
-            Clean, comfortable rooms in Gopanpally, Hyderabad — for travellers,
-            families and professionals.
-          </p>
+      <footer className="bg-ink-900 text-sand-200 px-5 sm:px-6">
+        <div className="max-w-6xl mx-auto py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <span className="grid place-items-center w-10 h-10 rounded-lg bg-ocean-500 text-white font-display text-lg font-bold">
+              S
+            </span>
+            <div className="leading-none">
+              <span className="block font-display text-lg font-bold text-white">
+                SS.INN OYO &amp; Hotels
+              </span>
+              <span className="block text-xs text-sand-300 mt-1">
+                Gopanpally, Hyderabad
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            <a href={`tel:${PHONE_PRIMARY}`} className="hover:text-white transition">
+              {PHONE_PRIMARY_DISPLAY}
+            </a>
+            <a href={`tel:${PHONE_SECONDARY}`} className="hover:text-white transition">
+              {PHONE_SECONDARY_DISPLAY}
+            </a>
+            <a
+              href={MAPS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-white transition"
+            >
+              Google Maps
+            </a>
+          </div>
         </div>
-        <div className="border-t border-ivory-50/10">
-          <p className="max-w-7xl mx-auto py-6 text-xs text-ivory-100/40 text-center tracking-wide font-light">
+        <div className="border-t border-white/10">
+          <p className="max-w-6xl mx-auto py-5 text-xs text-sand-300 text-center">
             &copy; 2026 SS.INN OYO &amp; Hotels. All rights reserved.
           </p>
         </div>
       </footer>
+
+      {/* Sticky mobile call / WhatsApp bar */}
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-sand-50/95 backdrop-blur border-t border-sand-300 grid grid-cols-2 gap-2 p-2.5">
+        <a
+          href={`tel:${PHONE_PRIMARY}`}
+          className="inline-flex items-center justify-center gap-2 bg-ocean-500 text-white py-3 rounded-lg font-semibold text-sm"
+        >
+          <FiPhone size={16} /> Call now
+        </a>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center gap-2 bg-white border border-sand-300 text-ink-900 py-3 rounded-lg font-semibold text-sm"
+        >
+          <FiMessageCircle size={16} /> WhatsApp
+        </a>
+      </div>
     </div>
   );
 }

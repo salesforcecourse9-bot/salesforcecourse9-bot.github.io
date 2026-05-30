@@ -13,28 +13,29 @@ export default {
           "Roboto",
           "sans-serif",
         ],
-        display: ["Cormorant Garamond", "Georgia", "serif"],
+        display: ["Lora", "Georgia", "serif"],
       },
       colors: {
-        ivory: {
-          50: "#FBF8F1",
-          100: "#F6F1E7",
-          200: "#ECE4D4",
-          300: "#DCD0B9",
+        sand: {
+          50: "#FCFBF9",
+          100: "#F7F5F1",
+          200: "#EDEAE3",
+          300: "#DED9CF",
         },
-        espresso: {
-          900: "#1C1714",
-          800: "#26201B",
-          700: "#3A322B",
+        ink: {
+          900: "#1F2933",
+          800: "#2C3744",
+          700: "#3B4754",
+          600: "#566372",
+          500: "#6B7785",
         },
-        gold: {
-          400: "#C6A565",
-          500: "#AC8A4E",
-          600: "#8C6F3C",
-        },
-        taupe: {
-          500: "#857667",
-          600: "#6B5E50",
+        ocean: {
+          50: "#EEF3F7",
+          100: "#E2EAF0",
+          400: "#5B86A6",
+          500: "#3E6B8B",
+          600: "#335A76",
+          700: "#274860",
         },
       },
     },
